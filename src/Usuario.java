@@ -1,3 +1,9 @@
+/**
+ * Representa un usuario con su nombre de usuario, contraseña de acceso y tipo de usuario.
+ * 
+ * @author Gloria y Guadalupe
+ */
+
 public class Usuario {
     private String user;
     private String password;
@@ -31,14 +37,38 @@ public class Usuario {
     }
 
     public void setUser(String newUser){
-        this.user = newUser;
+        
+        // if (newUser.length() < 9 && newUser.length() > 5){
+            this.user = newUser;
+        // } else System.out.println("Error, el user debe tener entre 5 y 8 caracteres.");
+
     }
 
     public void setPassword(String newPassword){
-        this.password = newPassword;
+
+        // if (newPassword.length() < 10 && newPassword.length() > 6){
+            this.password = newPassword;
+        // } else System.out.println("Error, la contraseña debe tener entre 6 y 9 caracteres.");
+
     }
 
     public void setTipoUsuario(TipoUsuario newTipoUsuario){
-        this.tipoUsuario = newTipoUsuario;
+            this.tipoUsuario = newTipoUsuario;
     }
+
+    public boolean login(String password, String user){
+        if (user.equals(this.user) && password.equals(this.password)){
+            return true;
+        } else return false;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                " usuario ='" + getUser() + "'" +
+                ", contraseña ='" + getPassword() + "'" +
+                ", tipo de usuario ='" + getTipoUsuario() + "'" +
+                "}";
+    }
+
 }
