@@ -1,7 +1,3 @@
-/**
- * @Author Gloria y Guadalupe
- */
-
 public class Usuario {
     private String user;
     private String password;
