@@ -1,4 +1,5 @@
 
+
 /**
  * Representa un enum donde se puede elegir el rol de usuario corriente o de usuario administrador.
  * 

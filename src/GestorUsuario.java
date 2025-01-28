@@ -6,7 +6,7 @@
  * @author Gloria y Guadalupe
  */
 
-class GestorUsuario {
+public class GestorUsuario {
     private Usuario [] usuarios; // array que guarda los objetos Usuario
     private int guardado; // controla cuántos usuarios están actualmente guardados en el array
     private static final int TAM = 100; // tamaño del array, num de objetos usuario que podemos guardar
@@ -25,7 +25,7 @@ class GestorUsuario {
         }
     }
 
-    //Consultar la info de usuarios registrados
+    //Consultar la info de todos los usuarios registrados
     @Override
     public String toString() {
         String stringUsuarios = "";

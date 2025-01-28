@@ -1,3 +1,5 @@
+
+
 /**
  * Representa un usuario con su nombre de usuario, contraseña de acceso y tipo de usuario.
  * 
@@ -56,12 +58,15 @@ public class Usuario {
             this.tipoUsuario = newTipoUsuario;
     }
 
+    // Métodos de los usuarios
+
     public boolean login(String password, String user){
         if (user.equals(this.user) && password.equals(this.password)){
             return true;
         } else return false;
     }
 
+    //Consultar la info de un usuario concreto
     @Override
     public String toString() {
         return "{" +

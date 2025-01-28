@@ -1,4 +1,5 @@
 
+
 /**
  * Clase principal para realizar pruebas con las clases Usuario y GestorUsuario.
  * 
@@ -18,6 +19,7 @@ public class UsuarioMain {
         gestor.nuevoUsuario(new Usuario("MonGeller24", "ilovemyroomba", TipoUsuario.USUARIO));
         gestor.nuevoUsuario(new Usuario("PrincesaConsuela", "imhislobster", TipoUsuario.USUARIO));
         gestor.nuevoUsuario(new Usuario("Pablo_Profe%", "arraydegatetes", TipoUsuario.ADMINISTRADOR));
-        
+       
     }
+
 }
