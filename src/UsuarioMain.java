@@ -8,10 +8,11 @@ import java.util.Scanner;
 
 public class UsuarioMain {
     public static Scanner sc = new Scanner(System.in);
+    public static GestorUsuario gestor = new GestorUsuario(); //Crear un objeto tipo GestorUsuario
 
     public static void main(String[] args) {
 
-        GestorUsuario gestor = new GestorUsuario(); //Crear un objeto tipo GestorUsuario
+        
 
         //Crear usuarios
         gestor.nuevoUsuario(new Usuario("Guadalupe01", "gorrito02", TipoUsuario.ADMINISTRADOR));
@@ -89,7 +90,7 @@ public class UsuarioMain {
                             System.out.println("    0. Salir.");
                             System.out.println("----------------------------------------------------------------");
 
-                            opcion = sc.nextInt();
+                            opcion = Integer.parseInt(sc.nextLine());
 
                             switch (opcion) {
                                 case 1:
@@ -105,10 +106,10 @@ public class UsuarioMain {
                                     System.out.println("Opción no desarrollada aún");
                                 break;
                                 case 5:
-                                    System.out.println("Opción no desarrollada aún");
+                                    crearUsuario();
                                 break;
                                 case 6:
-                                    System.out.println("Opción no desarrollada aún");
+                                    System.out.println(gestor.toString()); 
                                 break;
                                 case 7:
                                     System.out.println("Opción no desarrollada aún");
@@ -154,7 +155,7 @@ public class UsuarioMain {
                             System.out.println("    0. Salir.");
                             System.out.println("----------------------------------------------------------------");
 
-                            opcion = sc.nextInt();
+                            opcion = Integer.parseInt(sc.nextLine());
 
                             switch (opcion) {
                                 case 1:
@@ -180,6 +181,26 @@ public class UsuarioMain {
                                 break;
                             }
                         } while (opcion != 0);
+
+        }
+
+
+        public static void crearUsuario(){
+            System.out.println("Nombre de usuario:");
+            String nuevoUsuario = sc.nextLine();
+            System.out.println("Contraseña:");
+            String contrasena = sc.nextLine();
+            System.out.println("Tipo de usuario (ADMINISTRADOR/USUARIO):");
+            String tipoUsuarioStr = sc.nextLine();
+            TipoUsuario tipoUsuario = TipoUsuario.valueOf(tipoUsuarioStr.toUpperCase());
+
+            if (tipoUsuario != null) {
+                Usuario usuario = new Usuario(nuevoUsuario, contrasena, tipoUsuario);
+
+                gestor.nuevoUsuario(usuario);
+
+                System.out.println("Usuario creado.");
+            } else System.out.println("Error, tipo de usuario inexistente.");
 
         }
         

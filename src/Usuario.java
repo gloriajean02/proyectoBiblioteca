@@ -54,8 +54,12 @@ public class Usuario {
 
     }
 
+    @SuppressWarnings("unlikely-arg-type")
     public void setTipoUsuario(TipoUsuario newTipoUsuario){
-            this.tipoUsuario = newTipoUsuario;
+            if (newTipoUsuario.equals("ADMINISTRADOR") || newTipoUsuario.equals("USUARIO")) {
+                this.tipoUsuario = newTipoUsuario;
+            } else newTipoUsuario = null;
+            
     }
 
     // Métodos de los usuarios
