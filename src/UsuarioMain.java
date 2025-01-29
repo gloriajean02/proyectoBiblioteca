@@ -1,5 +1,8 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
-
+import java.util.Calendar;
 /**
  * Clase principal para realizar pruebas con las clases Usuario y GestorUsuario.
  * 
@@ -9,10 +12,29 @@ import java.util.Scanner;
 public class UsuarioMain {
     public static Scanner sc = new Scanner(System.in);
     public static GestorUsuario gestor = new GestorUsuario(); //Crear un objeto tipo GestorUsuario
-
+    public static GestorLibros sistema = new GestorLibros(); //Crear un objeto tipo GestorLibros
     public static void main(String[] args) {
 
-        
+        //Crear libros
+        sistema.agregarLibro(new Libro("El Quijote", "Miguel de Cervantes", Categoria.FICCION, crearFecha(1605, Calendar.OCTOBER, 1)));
+        sistema.agregarLibro(new Libro("Cien Años de Soledad", "Gabriel García Márquez", Categoria.REALISMO_MAGICO, crearFecha(1967, Calendar.MAY, 30)));
+        sistema.agregarLibro(new Libro("Don Juan Tenorio", "Tirso de Molina", Categoria.TEATRO, crearFecha(1630, Calendar.MARCH, 15)));
+        sistema.agregarLibro(new Libro("La Casa de los Espíritus", "Isabel Allende", Categoria.NOVELA, crearFecha(1982, Calendar.OCTOBER, 10)));
+        sistema.agregarLibro(new Libro("Crepúsculo", "Stephenie Meyer", Categoria.FANTASIA, crearFecha(2005, Calendar.AUGUST, 1)));
+        sistema.agregarLibro(new Libro("Nuevo Amanecer", "Stephenie Meyer", Categoria.FANTASIA, crearFecha(2006, Calendar.SEPTEMBER, 6)));
+        sistema.agregarLibro(new Libro("Eclipse", "Stephenie Meyer", Categoria.FANTASIA, crearFecha(2007, Calendar.AUGUST, 7)));
+        sistema.agregarLibro(new Libro("Amanecer", "Stephenie Meyer", Categoria.FANTASIA, crearFecha(2008, Calendar.AUGUST, 2)));
+        sistema.agregarLibro(new Libro("Harry Potter y la Piedra Filosofal", "J.K. Rowling", Categoria.FANTASIA, crearFecha(1997, Calendar.JUNE, 26)));
+        sistema.agregarLibro(new Libro("Dune", "Frank Herbert", Categoria.CIENCIA_FICCION, crearFecha(1965, Calendar.AUGUST, 1)));
+        sistema.agregarLibro(new Libro("El Código Da Vinci", "Dan Brown", Categoria.MISTERIO, crearFecha(2003, Calendar.MARCH, 18)));
+        sistema.agregarLibro(new Libro("Los Miserables", "Victor Hugo", Categoria.HISTORIA, crearFecha(1862, Calendar.MARCH, 1)));
+        sistema.agregarLibro(new Libro("Orgullo y Prejuicio", "Jane Austen", Categoria.ROMANCE, crearFecha(1813, Calendar.JANUARY, 28)));
+        sistema.agregarLibro(new Libro("Steve Jobs", "Walter Isaacson", Categoria.BIOGRAFIA, crearFecha(2011, Calendar.OCTOBER, 24)));
+        sistema.agregarLibro(new Libro("Los 7 Hábitos de la Gente Altamente Efectiva", "Stephen R. Covey", Categoria.AUTOAYUDA, crearFecha(1989, Calendar.AUGUST, 15)));
+        sistema.agregarLibro(new Libro("Sherlock Holmes: Estudio en Escarlata", "Arthur Conan Doyle", Categoria.POLICIACA, crearFecha(1887, Calendar.NOVEMBER, 1)));
+        sistema.agregarLibro(new Libro("Drácula", "Bram Stoker", Categoria.TERROR, crearFecha(1897, Calendar.MAY, 26)));
+        sistema.agregarLibro(new Libro("La Isla del Tesoro", "Robert Louis Stevenson", Categoria.AVENTURA, crearFecha(1883, Calendar.JANUARY, 1)));
+
 
         //Crear usuarios
         gestor.nuevoUsuario(new Usuario("Guadalupe01", "gorrito02", TipoUsuario.ADMINISTRADOR));
@@ -94,22 +116,36 @@ public class UsuarioMain {
 
                             switch (opcion) {
                                 case 1:
-                                    System.out.println("Opción no desarrollada aún");
-                                    break;
+                                    agregarLibro();
+                                break;
                                 case 2:
-                                    System.out.println("Opción no desarrollada aún");
+                                    eliminarLibro();
                                 break;
                                 case 3:
-                                    System.out.println("Opción no desarrollada aún");
+                                    System.out.println("Elige una opción:");
+                                    System.out.println("1. Buscar por título.");
+                                    System.out.println("2. Buscar por autor.");
+                                    System.out.println("3. Buscar por género.");
+                                    System.out.println("0. Salir al menú principal.");
+                                    int choice = Integer.parseInt(sc.nextLine());
+                                    switch (choice) {
+                                        case 1 -> buscarTitulo();
+                                        case 2 -> buscarAutor();
+                                        case 3 -> buscarGenero();
+                                        case 0 -> System.out.println("Saliendo al menú principal...");
+                                        default -> System.out.println("Error, opción no encontrada.");
+                                    }
                                 break;
                                 case 4:
-                                    System.out.println("Opción no desarrollada aún");
+                                    System.out.println("Lista de libros en la biblioteca:");
+                                    System.out.println(sistema);
                                 break;
                                 case 5:
                                     crearUsuario();
                                 break;
                                 case 6:
-                                    System.out.println(gestor.toString()); 
+                                    System.out.println("Información de usuarios registrados en la biblioteca:");
+                                    System.out.println(gestor); 
                                 break;
                                 case 7:
                                     System.out.println("Opción no desarrollada aún");
@@ -151,7 +187,6 @@ public class UsuarioMain {
                             System.out.println("    2. Mostrar todos los libros disponibles.");
                             System.out.println("    3. Realizar préstamos de libros.");
                             System.out.println("    4. Devolver libros prestados.");
-                            System.out.println("    5. Mostrar libros actualmente prestados.");
                             System.out.println("    0. Salir.");
                             System.out.println("----------------------------------------------------------------");
 
@@ -159,18 +194,28 @@ public class UsuarioMain {
 
                             switch (opcion) {
                                 case 1:
-                                    System.out.println("Opción no desarrollada aún");
-                                    break;
+                                    System.out.println("Elige una opción:");
+                                    System.out.println("1. Buscar por título.");
+                                    System.out.println("2. Buscar por autor.");
+                                    System.out.println("3. Buscar por género.");
+                                    System.out.println("0. Salir al menú principal.");
+                                    int choice = Integer.parseInt(sc.nextLine());
+                                    switch (choice) {
+                                        case 1 -> buscarTitulo();
+                                        case 2 -> buscarAutor();
+                                        case 3 -> buscarGenero();
+                                        case 0 -> System.out.println("Saliendo al menú principal...");
+                                        default -> System.out.println("Error, opción no encontrada.");
+                                    }
+                                break;
                                 case 2:
-                                    System.out.println("Opción no desarrollada aún");
+                                    System.out.println("Lista de libros en la biblioteca:");
+                                    System.out.println(sistema);
                                 break;
                                 case 3:
                                     System.out.println("Opción no desarrollada aún");
                                 break;
                                 case 4:
-                                    System.out.println("Opción no desarrollada aún");
-                                break;
-                                case 5:
                                     System.out.println("Opción no desarrollada aún");
                                 break;
                                 case 0:
@@ -184,6 +229,78 @@ public class UsuarioMain {
 
         }
 
+        
+
+        public static void agregarLibro(){
+            System.out.print("Ingrese el título del libro: ");
+            String titulo = sc.nextLine();
+            System.out.print("Ingrese el autor del libro: ");
+            String autor = sc.nextLine();
+            System.out.print("Ingrese la categoría del libro (FICCION, REALISMO_MAGICO, etc.): ");
+            String categoriaStr = sc.nextLine();
+            Categoria categoria = Categoria.valueOf(categoriaStr.toUpperCase());
+            System.out.print("Ingrese la fecha de publicación (AAAA-MM-DD): ");
+            String fechaStr = sc.nextLine();
+            Date fechaPublicacion = parseFecha(fechaStr); // Usamos el método parseFecha
+            
+            if (fechaPublicacion != null) {
+                Libro libro = new Libro(titulo, autor, categoria, fechaPublicacion);
+                sistema.agregarLibro(libro);
+                System.out.println("Libro agregado exitosamente.");     
+            } else System.out.println("Formato de fecha incorrecto.");
+                    
+        }
+
+        public static void eliminarLibro(){
+            System.out.print("Ingrese el título del libro a eliminar: ");
+            String tituloEliminar = sc.nextLine();
+            boolean eliminado = sistema.eliminarLibro(tituloEliminar);
+            
+            if (eliminado) {
+                System.out.println("Libro eliminado exitosamente.");
+            } else System.out.println("No se encontró el libro para eliminar.");
+        }
+
+        public static void buscarTitulo(){
+            System.out.print("Ingrese el título del libro a buscar: ");
+            String tituloBuscar = sc.nextLine();
+            Libro libroEncontrado = sistema.buscarLibro(tituloBuscar);
+            
+            if (libroEncontrado != null) {
+                System.out.println("Libro encontrado: " + libroEncontrado);
+            } else {
+                System.out.println("No se encontró el libro.");
+            }
+        }
+
+        public static void buscarAutor(){
+            System.out.print("Ingrese el autor de los libros a buscar: ");
+            String autorBuscar = sc.nextLine();
+            Libro[] librosPorAutor = sistema.buscarPorAutor(autorBuscar);
+            if (librosPorAutor.length > 0) {
+                System.out.println("Libros encontrados por el autor " + autorBuscar + ":");
+                for (Libro l : librosPorAutor) {
+                    System.out.println(l);
+                }
+            } else {
+                System.out.println("No se encontraron libros de ese autor.");
+            }
+        }
+
+        public static void buscarGenero(){
+            System.out.print("Ingrese la categoría de los libros a buscar (FICCION, REALISMO_MAGICO, etc.): ");
+            String categoriaBuscarStr = sc.nextLine();
+            Categoria categoriaBuscar = Categoria.valueOf(categoriaBuscarStr.toUpperCase());
+            Libro[] librosPorCategoria = sistema.buscarPorCategoria(categoriaBuscar);
+            if (librosPorCategoria.length > 0) {
+                System.out.println("Libros encontrados en la categoría " + categoriaBuscar + ":");
+                for (Libro l : librosPorCategoria) {
+                    System.out.println(l);
+                }
+            } else {
+                System.out.println("No se encontraron libros en esa categoría.");
+            }
+        }
 
         public static void crearUsuario(){
             System.out.println("Nombre de usuario:");
@@ -208,8 +325,24 @@ public class UsuarioMain {
         
 
 
-
+        // Método para crear fechas
+    public static Date crearFecha(int anio, int mes, int dia) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(anio, mes, dia, 0, 0, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
     }
+
+    // Método para parsear fechas
+    public static Date parseFecha(String fechaStr) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            return sdf.parse(fechaStr);
+        } catch (ParseException e) {
+            return null; 
+        }
+    }
+}
 
     
 
