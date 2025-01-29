@@ -9,7 +9,9 @@ public class Main {
 
     public static void main(String[] args) {
         GestorLibros sistema = new GestorLibros();
-        
+        GestorPrestamos gestorPrestamos = new GestorPrestamos(20);
+        GestorUsuario gestor = new GestorUsuario();
+
         sistema.agregarLibro(new Libro("El Quijote", "Miguel de Cervantes", Categoria.FICCION, crearFecha(1605, Calendar.OCTOBER, 1)));
         sistema.agregarLibro(new Libro("Cien Años de Soledad", "Gabriel García Márquez", Categoria.REALISMO_MAGICO, crearFecha(1967, Calendar.MAY, 30)));
         sistema.agregarLibro(new Libro("Don Juan Tenorio", "Tirso de Molina", Categoria.TEATRO, crearFecha(1630, Calendar.MARCH, 15)));
@@ -29,6 +31,41 @@ public class Main {
         sistema.agregarLibro(new Libro("Drácula", "Bram Stoker", Categoria.TERROR, crearFecha(1897, Calendar.MAY, 26)));
         sistema.agregarLibro(new Libro("La Isla del Tesoro", "Robert Louis Stevenson", Categoria.AVENTURA, crearFecha(1883, Calendar.JANUARY, 1)));
 
+        //Crear usuarios
+        gestor.nuevoUsuario(new Usuario("Guadalupe01", "gorrito02", TipoUsuario.ADMINISTRADOR));
+        gestor.nuevoUsuario(new Usuario("LunaLovegood", "ilovemagic", TipoUsuario.USUARIO));
+        gestor.nuevoUsuario(new Usuario("HarryEl+Prota", "soyunpesao", TipoUsuario.USUARIO));
+        gestor.nuevoUsuario(new Usuario("CarrieBradshaw", "redflag1965", TipoUsuario.USUARIO));
+        gestor.nuevoUsuario(new Usuario("RachelGreen01", "ilovemyoutfit", TipoUsuario.USUARIO));
+        gestor.nuevoUsuario(new Usuario("MonGeller24", "ilovemyroomba", TipoUsuario.USUARIO));
+        gestor.nuevoUsuario(new Usuario("PrincesaConsuela", "imhislobster", TipoUsuario.USUARIO));
+        gestor.nuevoUsuario(new Usuario("Pablo_Profe%", "arraydegatetes", TipoUsuario.ADMINISTRADOR));
+        gestor.nuevoUsuario(new Usuario("ChandlerBing", "couldibeany", TipoUsuario.USUARIO));
+        gestor.nuevoUsuario(new Usuario("RossGeller", "unagipaleont", TipoUsuario.USUARIO));
+        gestor.nuevoUsuario(new Usuario("JoeyTribbiani", "howudoin123", TipoUsuario.USUARIO));
+        gestor.nuevoUsuario(new Usuario("BruceWayne", "batcave123", TipoUsuario.USUARIO));
+        gestor.nuevoUsuario(new Usuario("ClarkKent", "superman78", TipoUsuario.USUARIO));
+        gestor.nuevoUsuario(new Usuario("GandalfTheGrey", "youShallPass", TipoUsuario.ADMINISTRADOR));
+        gestor.nuevoUsuario(new Usuario("YodaMaster", "forcebewithyou", TipoUsuario.ADMINISTRADOR));
+        gestor.nuevoUsuario(new Usuario("DarthVader", "IamYourFather", TipoUsuario.USUARIO));
+
+        boolean loginExitoso = false;
+        Usuario usuarioActual = null;
+        do {
+            System.out.print("Ingrese su usuario: ");
+            String username = sc.nextLine();
+            System.out.print("Ingrese su contraseña: ");
+            String password = sc.nextLine();
+
+            usuarioActual = gestor.buscarUsuario(username);
+            if (usuarioActual != null && usuarioActual.login(username, password)) {
+                loginExitoso = true;
+                System.out.println("¡Bienvenido, " + usuarioActual.getUser() + "!");
+            } else {
+                System.out.println("Usuario o contraseña incorrectos. Intente de nuevo.");
+            }
+        } while (!loginExitoso);
+
         // Menú 
         while (true) {
             System.out.println("\n--- Menú de Biblioteca ---");
@@ -39,10 +76,13 @@ public class Main {
             System.out.println("5. Actualizar libro");
             System.out.println("6. Eliminar libro");
             System.out.println("7. Mostrar todos los libros");
-            System.out.println("8. Salir");
+            System.out.println("8. Realizar préstamo");
+            System.out.println("9. Devolver libro");
+            System.out.println("10. Mostrar libros prestados");
+            System.out.println("11. Salir");
             System.out.print("Seleccione una opción: ");
             int opcion = sc.nextInt();
-            sc.nextLine(); 
+            sc.nextLine();
 
             switch (opcion) {
                 case 1:
@@ -159,7 +199,63 @@ public class Main {
                     System.out.println(sistema);
                     break;
 
-                case 8:
+                
+
+                    case 8:
+                    // Realizar préstamo (solo para administradores)
+                    if (usuarioActual.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
+                        System.out.print("Ingrese el título del libro a prestar: ");
+                        String tituloPrestamo = sc.nextLine();
+                        Libro libroPrestamo = sistema.buscarLibro(tituloPrestamo);
+                        if (libroPrestamo != null) {
+                            System.out.print("Ingrese el nombre de usuario al que se prestará el libro: ");
+                            String usuarioPrestamo = sc.nextLine();
+                            Usuario usuario = gestor.buscarUsuario(usuarioPrestamo);
+                            if (usuario != null) {
+                                gestorPrestamos.realizarPrestamo(libroPrestamo, usuario);
+                            } else {
+                                System.out.println("Usuario no encontrado.");
+                            }
+                        } else {
+                            System.out.println("Libro no encontrado.");
+                        }
+                    } else {
+                        System.out.println("Acción solo disponible para administradores.");
+                    }
+                    break;
+
+                case 9:
+                    // Devolver libro (solo para administradores)
+                    if (usuarioActual.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
+                        System.out.print("Ingrese el título del libro a devolver: ");
+                        String tituloDevolucion = sc.nextLine();
+                        Libro libroDevolucion = sistema.buscarLibro(tituloDevolucion);
+                        if (libroDevolucion != null) {
+                            System.out.print("Ingrese el nombre de usuario que devuelve el libro: ");
+                            String usuarioDevolucion = sc.nextLine();
+                            Usuario usuario = gestor.buscarUsuario(usuarioDevolucion);
+                            if (usuario != null) {
+                                gestorPrestamos.devolverLibro(libroDevolucion, usuario);
+                            } else {
+                                System.out.println("Usuario no encontrado.");
+                            }
+                        } else {
+                            System.out.println("Libro no encontrado.");
+                        }
+                    } else {
+                        System.out.println("Acción solo disponible para administradores.");
+                    }
+                    break;
+
+                case 10:
+                    // Mostrar libros prestados (solo para administradores)
+                    if (usuarioActual.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
+                        gestorPrestamos.mostrarLibrosPrestados(usuarioActual);
+                    } else {
+                        System.out.println("Acción solo disponible para administradores.");
+                    }
+                    break;
+                case 11:
                     // Salir
                     System.out.println("Saliendo del programa.");
                     sc.close();
@@ -188,4 +284,4 @@ public class Main {
             return null; 
         }
     }
-}  
+}
