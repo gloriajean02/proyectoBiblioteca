@@ -26,7 +26,25 @@ public class Libro {
 
     public Categoria getCategoria () {return this.categoria;}
 
-    public void setCategoria (Categoria categoria) {this.categoria = categoria ;}
+    public void setCategoria (Categoria categoria) {
+
+        /*if (categoria.equals(Categoria.FICCION) || categoria.equals(Categoria.REALISMO_MAGICO)
+        || categoria.equals(Categoria.TEATRO) || categoria.equals(Categoria.NOVELA)
+        || categoria.equals(Categoria.FANTASIA) || categoria.equals(Categoria.CIENCIA_FICCION)
+        || categoria.equals(Categoria.MISTERIO) || categoria.equals(Categoria.HISTORIA)
+        || categoria.equals(Categoria.ROMANCE) || categoria.equals(Categoria.BIOGRAFIA)
+        || categoria.equals(Categoria.AUTOAYUDA) || categoria.equals(Categoria.POLICIACA)
+        || categoria.equals(Categoria.TERROR) || categoria.equals(Categoria.AVENTURA)) {*/
+
+            this.categoria = categoria;
+
+        /* } else {
+
+        categoria = null;
+
+        }*/
+
+    }
 
     public Date getFechaPublicacion () {return this.fechaPublicacion;}
 
