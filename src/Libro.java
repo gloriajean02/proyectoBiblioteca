@@ -4,14 +4,14 @@ public class Libro {
 
     private String titulo;
     private String autor;
-    private String categoria;
+    private Categoria categoria;
     private Date fechaPublicacion;
 
-    public Libro (String titulo, String autor, String categoria, Date fechaPublicacion) {
+    public Libro (String titulo, String autor, Categoria categoria, Date fechaPublicacion) {
 
         this.titulo = titulo;
         this.autor = autor;
-        this.categoria = categoria;
+        this.categoria = Categoria.FANTASIA;
         this.fechaPublicacion = fechaPublicacion;
 
     }
@@ -24,9 +24,9 @@ public class Libro {
 
     public void setAutor (String autor) {this.autor = autor;}
 
-    public String getCategoria () {return this.categoria;}
+    public Categoria getCategoria () {return this.categoria;}
 
-    public void setCategoria (String categoria) {this.categoria = categoria;}
+    public void setCategoria (Categoria categoria) {this.categoria = categoria ;}
 
     public Date getFechaPublicacion () {return this.fechaPublicacion;}
 
