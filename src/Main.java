@@ -9,7 +9,7 @@ public class Main {
 
     public static void main(String[] args) {
         GestorLibros sistema = new GestorLibros();
-        GestorPrestamos gestorPrestamos = new GestorPrestamos(20);
+        GestorPrestamos gestorPrestamos = new GestorPrestamos();
         GestorUsuario gestor = new GestorUsuario();
 
         sistema.agregarLibro(new Libro("El Quijote", "Miguel de Cervantes", Categoria.FICCION, crearFecha(1605, Calendar.OCTOBER, 1)));

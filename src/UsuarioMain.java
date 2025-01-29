@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.Scanner;
 import java.util.Calendar;
 /**
- * Clase principal para realizar pruebas con las clases Usuario y GestorUsuario.
+ * Clase principal para realizar pruebas.
  * 
  * @author Gloria y Guadalupe
  */
@@ -13,6 +13,7 @@ public class UsuarioMain {
     public static Scanner sc = new Scanner(System.in);
     public static GestorUsuario gestor = new GestorUsuario(); //Crear un objeto tipo GestorUsuario
     public static GestorLibros sistema = new GestorLibros(); //Crear un objeto tipo GestorLibros
+    public static GestorPrestamos gestorPrestamos = new GestorPrestamos(); //Crear un objeto tipo GestorPrestamos
     public static void main(String[] args) {
 
         //Crear libros
@@ -54,10 +55,13 @@ public class UsuarioMain {
         gestor.nuevoUsuario(new Usuario("YodaMaster", "forcebewithyou", TipoUsuario.ADMINISTRADOR));
         gestor.nuevoUsuario(new Usuario("DarthVader", "IamYourFather", TipoUsuario.USUARIO));
 
+        //Crear préstamos
+        
+
 
         // Login
         boolean loginExitoso = false;
-      
+        
         do {
             System.out.print("Ingrese su usuario: ");
             String username = sc.nextLine();
@@ -148,13 +152,14 @@ public class UsuarioMain {
                                     System.out.println(gestor); 
                                 break;
                                 case 7:
-                                    System.out.println("Opción no desarrollada aún");
+                                    prestarLibro();
                                 break;
                                 case 8:
-                                    System.out.println("Opción no desarrollada aún");
+                                    devolverLibro();
                                 break;
                                 case 9:
-                                    System.out.println("Opción no desarrollada aún");
+                                    System.out.println("Lista de libros prestados:");
+                                    System.out.println(gestorPrestamos);
                                 break;
                                 case 10:
                                     System.out.println("Opción no desarrollada aún");
@@ -213,10 +218,10 @@ public class UsuarioMain {
                                     System.out.println(sistema);
                                 break;
                                 case 3:
-                                    System.out.println("Opción no desarrollada aún");
+                                    prestarLibro();
                                 break;
                                 case 4:
-                                    System.out.println("Opción no desarrollada aún");
+                                    devolverLibro();
                                 break;
                                 case 0:
                                     System.out.println("Saliendo...");
@@ -321,6 +326,41 @@ public class UsuarioMain {
 
             } else System.out.println("Error, tipo de usuario inexistente.");
 
+        }
+
+        public static void prestarLibro(){
+            System.out.print("Ingrese el título del libro a prestar: ");
+            String tituloPrestamo = sc.nextLine();
+            Libro libroPrestamo = sistema.buscarLibro(tituloPrestamo);
+            if (libroPrestamo != null) {
+                System.out.print("Ingrese el nombre de usuario al que se prestará el libro: ");
+                String usuarioPrestamo = sc.nextLine();
+                Usuario usuario = gestor.buscarUsuario(usuarioPrestamo);
+                if (usuario != null) {
+                    gestorPrestamos.realizarPrestamo(libroPrestamo, usuario);
+                } else {
+                    System.out.println("Usuario no encontrado.");
+                }
+            } else {
+                System.out.println("Libro no encontrado.");
+            }
+
+        }
+
+        public static void devolverLibro(){
+            System.out.print("Ingrese el título del libro a devolver: ");
+                String tituloDevolucion = sc.nextLine();
+                Libro libroDevolucion = sistema.buscarLibro(tituloDevolucion);
+                if (libroDevolucion != null) {
+                    System.out.print("Ingrese el nombre de usuario que devuelve el libro: ");
+                    String usuarioDevolucion = sc.nextLine();
+                    Usuario usuario = gestor.buscarUsuario(usuarioDevolucion);
+                    if (usuario != null) {
+                        gestorPrestamos.devolverLibro(libroDevolucion, usuario);
+                    } else {
+                        System.out.println("Usuario no encontrado.");
+                    }
+                } else System.out.println("Libro no encontrado.");
         }
         
 

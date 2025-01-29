@@ -4,10 +4,11 @@ public class GestorPrestamos {
 
     private Prestamo[] prestamos;
     private int contador;  
+    private static final int TAM = 100;
 
-    public GestorPrestamos(int capacidad) {
+    public GestorPrestamos() {
 
-        this.prestamos = new Prestamo[capacidad];
+        this.prestamos = new Prestamo[TAM];
         this.contador = 0;  
     }
 
@@ -29,23 +30,19 @@ public class GestorPrestamos {
             if (prestamos[i].getLibro().equals(libro) && prestamos[i].getUsuario().equals(usuario) && prestamos[i].getFechaDevolucion() == null) {
                 prestamos[i].devolverLibro(new Date());
                 System.out.println("El libro '" + libro.getTitulo() + "' ha sido devuelto.");
-                return;
-            }
+            } else System.out.println("No se encontró un préstamo activo de este libro.");
         }
-        System.out.println("No se encontró un préstamo activo de este libro.");
+        
     }
 
-    // Mostrar libros actualmente prestados (solo para administradores)
-    public void mostrarLibrosPrestados(Usuario usuario) {
-        if (usuario.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
-            System.out.println("Libros actualmente prestados:");
-            for (int i = 0; i < contador; i++) {
-                if (prestamos[i].getFechaDevolucion() == null) {
-                    System.out.println(prestamos[i]);
-                }
-            }
-        } else {
-            System.out.println("Acción solo disponible para administradores.");
+    // Mostrar libros actualmente prestados 
+    @Override
+    public String toString() {
+        String stringLibrosPrestados = "";
+        for (int i = 0; i < contador; i++) {
+            stringLibrosPrestados += prestamos[i].toString() + "\n";
         }
+        return stringLibrosPrestados;
     }
+    
 }
