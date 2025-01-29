@@ -54,9 +54,9 @@ public class Usuario {
 
     }
 
-    @SuppressWarnings("unlikely-arg-type")
+    
     public void setTipoUsuario(TipoUsuario newTipoUsuario){
-            if (newTipoUsuario.equals("ADMINISTRADOR") || newTipoUsuario.equals("USUARIO")) {
+            if (newTipoUsuario.equals(TipoUsuario.ADMINISTRADOR) || newTipoUsuario.equals(TipoUsuario.USUARIO)) {
                 this.tipoUsuario = newTipoUsuario;
             } else newTipoUsuario = null;
             

@@ -192,14 +192,16 @@ public class UsuarioMain {
             String contrasena = sc.nextLine();
             System.out.println("Tipo de usuario (ADMINISTRADOR/USUARIO):");
             String tipoUsuarioStr = sc.nextLine();
-            TipoUsuario tipoUsuario = TipoUsuario.valueOf(tipoUsuarioStr.toUpperCase());
 
-            if (tipoUsuario != null) {
+            if (tipoUsuarioStr.equals("ADMINISTRADOR") || tipoUsuarioStr.equals("USUARIO") ) {
+                TipoUsuario tipoUsuario = TipoUsuario.valueOf(tipoUsuarioStr);
+
                 Usuario usuario = new Usuario(nuevoUsuario, contrasena, tipoUsuario);
 
                 gestor.nuevoUsuario(usuario);
 
                 System.out.println("Usuario creado.");
+
             } else System.out.println("Error, tipo de usuario inexistente.");
 
         }
