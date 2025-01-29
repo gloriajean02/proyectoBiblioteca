@@ -11,7 +11,7 @@ public class Libro {
 
         this.titulo = titulo;
         this.autor = autor;
-        this.categoria = Categoria.FANTASIA;
+        this.categoria = categoria;
         this.fechaPublicacion = fechaPublicacion;
 
     }
