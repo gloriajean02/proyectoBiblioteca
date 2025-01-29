@@ -25,6 +25,42 @@ public class GestorUsuario {
         }
     }
 
+    // Buscar un usuario en el array (necesario para hacer login)
+    public Usuario buscarUsuario(String username) {
+        for (int i = 0; i < usuarios.length; i++) {
+            if (usuarios[i].getUser().equals(username)) {
+                return usuarios[i];
+            }
+        }
+        return null;
+    }
+    
+    
+    // Buscar el indice del array donde se encuentra el usuario
+    private int buscarIndiceUsuario(String username) {
+        for (int i = 0; i < guardado; i++) {
+            if (usuarios[i].getUser().equals(username)) {
+                return i; // Devuelve la posición del array donde está el usuario
+            }
+        }
+        return -1; // Usuario no encontrado
+    }
+
+    // Eliminar usuario del array, utilizo el método anterior para no dejar huecos vacíos en el array
+    public boolean eliminarUsuario(String username) {
+        int indice = buscarIndiceUsuario(username); // El método anterior nos devuelve el indice
+        if (indice != -1) { // Si el usuario existe
+            for (int i = indice; i < guardado - 1; i++) { // Recorre desde el indice hasta el final del array
+                usuarios[i] = usuarios[i + 1]; // Desplazar los elementos a la izquierda
+            }
+            usuarios[--guardado] = null; // Reducimos el contador y eliminamos la última referencia
+            return true;
+        } else {
+            return false; // Usuario no encontrado
+        }
+    }
+    
+
     //Consultar la info de todos los usuarios registrados
     @Override
     public String toString() {

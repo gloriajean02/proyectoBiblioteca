@@ -13,7 +13,7 @@ public class Usuario {
 
     //Constructor por defecto
     public Usuario(){
-        this.user = "gloriajean02";
+        this.user = "usuarioxDefecto";
         this.password = "password123";
         this.tipoUsuario = TipoUsuario.USUARIO;
     }
@@ -60,8 +60,8 @@ public class Usuario {
 
     // Métodos de los usuarios
 
-    public boolean login(String password, String user){
-        if (user.equals(this.user) && password.equals(this.password)){
+    public boolean login(String user, String password){
+        if (this.user.equals(user) && this.password.equals(password)){
             return true;
         } else return false;
     }
