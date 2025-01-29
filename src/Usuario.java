@@ -59,7 +59,6 @@ public class Usuario {
     }
 
     // Métodos de los usuarios
-
     public boolean login(String user, String password){
         if (this.user.equals(user) && this.password.equals(password)){
             return true;

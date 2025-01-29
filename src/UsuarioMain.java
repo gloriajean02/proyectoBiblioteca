@@ -7,9 +7,9 @@ import java.util.Scanner;
  */
 
 public class UsuarioMain {
-    public static void main(String[] args) {
+    public static Scanner sc = new Scanner(System.in);
 
-        Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) {
 
         GestorUsuario gestor = new GestorUsuario(); //Crear un objeto tipo GestorUsuario
 
@@ -34,6 +34,7 @@ public class UsuarioMain {
 
         // Login
         boolean loginExitoso = false;
+      
         do {
             System.out.print("Ingrese su usuario: ");
             String username = sc.nextLine();
@@ -42,19 +43,150 @@ public class UsuarioMain {
 
             Usuario usuarioEncontrado = gestor.buscarUsuario(username); // nos devuelve null si no lo encuentra
             
-            if (usuarioEncontrado != null && usuarioEncontrado.login(username, password) == true) {
-                loginExitoso = true;
-                System.out.println("¡Bienvenido, " + usuarioEncontrado.getUser() + "!");
+            if (usuarioEncontrado != null) {
+                if (usuarioEncontrado.login(username, password)) {
+                    loginExitoso = true;
+                    System.out.println("¡Bienvenido, " + usuarioEncontrado.getUser() + "!");
+                    if (usuarioEncontrado.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
+                        menuAdmin();
+                    }
+                    else {
+                        menuUsuario(); 
+                    }    
+                }  else {
+                    System.out.println("Contraseña incorrecta. Intente de nuevo.");
+                }
             } else {
-                System.out.println("Usuario o contraseña incorrectos. Intente de nuevo.");
+                System.out.println("Usuario no encontrado. Intente de nuevo.");
             }
             
         } while (loginExitoso == false);
+    }
+    
 
-        // Menú
+    
+
+        // Menu ADMIN
+        public static void menuAdmin(){
+
+            int opcion = 0;
+
+                        do {
+                            System.out.println("                     Menú Biblioteca");
+                            System.out.println("---------------------------------------------------------------");
+                            System.out.println("    1. Agregar libros nuevos.");
+                            System.out.println("    2. Eliminar libros existentes.");
+                            System.out.println("    3. Buscar libros por título, autor o categoría.");
+                            System.out.println("    4. Mostrar todos los libros disponibles.");
+                            System.out.println("    5. Registrar nuevos usuarios.");
+                            System.out.println("    6. Consultar información de usuarios registrados.");
+                            System.out.println("    7. Realizar préstamos de libros.");
+                            System.out.println("    8. Devolver libros prestados.");
+                            System.out.println("    9. Mostrar libros actualmente prestados.");
+                            System.out.println("    10. Mostrar número de préstamos totales y activos.");
+                            System.out.println("    11. Listar los libros más prestados.");
+                            System.out.println("    12. Mostrar qué usuario tiene más préstamos activos.");
+                            System.out.println("    0. Salir.");
+                            System.out.println("----------------------------------------------------------------");
+
+                            opcion = sc.nextInt();
+
+                            switch (opcion) {
+                                case 1:
+                                    System.out.println("Opción no desarrollada aún");
+                                    break;
+                                case 2:
+                                    System.out.println("Opción no desarrollada aún");
+                                break;
+                                case 3:
+                                    System.out.println("Opción no desarrollada aún");
+                                break;
+                                case 4:
+                                    System.out.println("Opción no desarrollada aún");
+                                break;
+                                case 5:
+                                    System.out.println("Opción no desarrollada aún");
+                                break;
+                                case 6:
+                                    System.out.println("Opción no desarrollada aún");
+                                break;
+                                case 7:
+                                    System.out.println("Opción no desarrollada aún");
+                                break;
+                                case 8:
+                                    System.out.println("Opción no desarrollada aún");
+                                break;
+                                case 9:
+                                    System.out.println("Opción no desarrollada aún");
+                                break;
+                                case 10:
+                                    System.out.println("Opción no desarrollada aún");
+                                break;
+                                case 11:
+                                    System.out.println("Opción no desarrollada aún");
+                                break;
+                                case 12:
+                                    System.out.println("Opción no desarrollada aún");
+                                break;
+                                case 0:
+                                    System.out.println("Saliendo...");
+                                break;
+                                default:
+                                    System.out.println("Opción inexistente. Pulse 0 para salir.");
+                                break;
+                            }
+                        } while (opcion != 0);
+
+        }
+        
+        public static void menuUsuario(){
+
+            int opcion = 0;
+
+                        do {
+                            System.out.println("                     Menú Biblioteca");
+                            System.out.println("---------------------------------------------------------------");
+                            System.out.println("    1. Buscar libros por título, autor o categoría.");
+                            System.out.println("    2. Mostrar todos los libros disponibles.");
+                            System.out.println("    3. Realizar préstamos de libros.");
+                            System.out.println("    4. Devolver libros prestados.");
+                            System.out.println("    5. Mostrar libros actualmente prestados.");
+                            System.out.println("    0. Salir.");
+                            System.out.println("----------------------------------------------------------------");
+
+                            opcion = sc.nextInt();
+
+                            switch (opcion) {
+                                case 1:
+                                    System.out.println("Opción no desarrollada aún");
+                                    break;
+                                case 2:
+                                    System.out.println("Opción no desarrollada aún");
+                                break;
+                                case 3:
+                                    System.out.println("Opción no desarrollada aún");
+                                break;
+                                case 4:
+                                    System.out.println("Opción no desarrollada aún");
+                                break;
+                                case 5:
+                                    System.out.println("Opción no desarrollada aún");
+                                break;
+                                case 0:
+                                    System.out.println("Saliendo...");
+                                break;
+                                default:
+                                    System.out.println("Opción inexistente. Pulse 0 para salir.");
+                                break;
+                            }
+                        } while (opcion != 0);
+
+        }
+        
+
 
 
     }
 
     
-}
+

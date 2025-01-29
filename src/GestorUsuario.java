@@ -27,7 +27,7 @@ public class GestorUsuario {
 
     // Buscar un usuario en el array (necesario para hacer login)
     public Usuario buscarUsuario(String username) {
-        for (int i = 0; i < usuarios.length; i++) {
+        for (int i = 0; i < guardado; i++) { // Recorre hasta guardado, no el array entero
             if (usuarios[i].getUser().equals(username)) {
                 return usuarios[i];
             }
