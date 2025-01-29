@@ -8,7 +8,7 @@ public class Main {
     public static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
-        Biblioteca sistema = new Biblioteca();
+        GestorLibros sistema = new GestorLibros();
         
         sistema.agregarLibro(new Libro("El Quijote", "Miguel de Cervantes", Categoria.FICCION, crearFecha(1605, Calendar.OCTOBER, 1)));
         sistema.agregarLibro(new Libro("Cien Años de Soledad", "Gabriel García Márquez", Categoria.REALISMO_MAGICO, crearFecha(1967, Calendar.MAY, 30)));
@@ -29,7 +29,7 @@ public class Main {
         sistema.agregarLibro(new Libro("Drácula", "Bram Stoker", Categoria.TERROR, crearFecha(1897, Calendar.MAY, 26)));
         sistema.agregarLibro(new Libro("La Isla del Tesoro", "Robert Louis Stevenson", Categoria.AVENTURA, crearFecha(1883, Calendar.JANUARY, 1)));
 
-        // Menú interactivo
+        // Menú 
         while (true) {
             System.out.println("\n--- Menú de Biblioteca ---");
             System.out.println("1. Agregar libro");
@@ -42,7 +42,7 @@ public class Main {
             System.out.println("8. Salir");
             System.out.print("Seleccione una opción: ");
             int opcion = sc.nextInt();
-            sc.nextLine(); // Para consumir el salto de línea después de la opción
+            sc.nextLine(); 
 
             switch (opcion) {
                 case 1:
@@ -185,36 +185,7 @@ public class Main {
         try {
             return sdf.parse(fechaStr);
         } catch (ParseException e) {
-            return null; // Si la fecha no es válida, retornamos null
+            return null; 
         }
     }
-}
-
-
-
-        /*System.out.println("Buscar libro:");
-        String titulo = sc.nextLine();
-        Libro libroEncontrado= sistema.buscarLibro;
-        if (libroEncontrado != null){
-            System.out.println("Libro encontrado");
-        }else{
-            System.out.println("Libro no encontrado");
-        }
-
-        System.out.println("Libros disponibles:");
-        sistema.mostrarLibros();
-
-        System.out.println("\nBuscar libro: " + sistema.buscarLibro("El Quijote"));
-
-        System.out.println("\nLibros de Gabriel García Márquez:");
-        sistema.mostrarLibrosPorAutor("Gabriel García Márquez");
-
-        Libro libroActualizado = new Libro("El Quijote", "Miguel de Cervantes", "Ficción", crearFecha(1605, Calendar.SEPTEMBER, 1));
-        sistema.actualizarLibro("El Quijote", libroActualizado);
-        System.out.println("\nLibro actualizado:");
-        sistema.mostrarLibros();
-
-        sistema.eliminarLibro("La Casa de los Espíritus");
-        System.out.println("\nLibros después de eliminar:");
-        sistema.mostrarLibros();
-    }*/
+}  
