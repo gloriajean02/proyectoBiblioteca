@@ -23,6 +23,7 @@ public class Prestamo {
 
     // Constructor con fecha de devolución opcional
     public Prestamo(Libro libro, Usuario usuario, Date fechaPrestamo, Date fechaDevolucion) {
+        
         this.libro = libro;
         this.usuario = usuario;
         this.fechaPrestamo = fechaPrestamo;

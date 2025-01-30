@@ -15,8 +15,8 @@ public class GestorPrestamos {
 
     public GestorPrestamos() {
 
-        this.prestamos = new Prestamo[TAM];
-        this.contador = 0;  
+        prestamos = new Prestamo[TAM];
+        contador = 0;  
     }
 
     // Nuevo prestamo
@@ -58,8 +58,6 @@ public class GestorPrestamos {
         }
         return prestamosActivos;
     }
-
-    // Listar libros más prestados
     
     
     
@@ -116,46 +114,47 @@ public class GestorPrestamos {
         return prestamosActivos;
     }
 
-    //Encontrar el libro más prestado
     public Libro libroMasPrestado() {
-        Libro[] librosContados = new Libro[TAM];
+        Libro[] prestamosContados = new Libro[TAM];
         int[] contadorPrestamos = new int[TAM];
         int librosRegistrados = 0;
         Libro libroPopular = null;
-        int maxPrestamos = 0;
-        boolean encontrado = false;
+        int numPrestamos = 0;
+        
     
-        for (int i = 0; i < contador && !encontrado; i++) {  
-            Libro libro = prestamos[i].getLibro();
-            encontrado = false;
+        for (int i = 0; i < contador; i++) { 
+            if (prestamos[i] != null && prestamos[i].getLibro() != null) {
+                Libro libro = prestamos[i].getLibro();
+                boolean encontrado = false;
     
-            // Buscar si el libro ya está en la lista
-            for (int j = 0; j < librosRegistrados; j++) {
-                if (librosContados[j] != null && librosContados[j].equals(libro)) {
-                    contadorPrestamos[j]++;
-                    encontrado = true;
+                // Buscar si el libro ya está en la lista
+                for (int j = 0; j < librosRegistrados; j++) {
+                    if (prestamosContados[j] != null && prestamosContados[j].equals(libro)) {
+                        contadorPrestamos[j]++;
+                        encontrado = true;
+                    }
                 }
-            }
     
-            // Si no está en la lista, lo agregamos
-            if (!encontrado) {
-                librosContados[librosRegistrados] = libro;
-                contadorPrestamos[librosRegistrados] = 1;
-                librosRegistrados++;
+                // Si no está en la lista, lo agregamos
+                if (!encontrado) {
+                    prestamosContados[librosRegistrados] = libro;
+                    contadorPrestamos[librosRegistrados] = 1;
+                    librosRegistrados++;
+                }
             }
         }
     
         // Encontrar el libro más prestado
         for (int i = 0; i < librosRegistrados; i++) {
-            if (contadorPrestamos[i] > maxPrestamos) {
-                maxPrestamos = contadorPrestamos[i];
-                libroPopular = librosContados[i];
+            if (contadorPrestamos[i] > numPrestamos) {
+                numPrestamos = contadorPrestamos[i];
+                libroPopular = prestamosContados[i];
             }
         }
     
-        return libroPopular;  // Devuelve el libro más prestado 
+        return libroPopular;
     }
-
+    
 
     //Contar las veces que se ha prestado el libro
     public int cantidadPrestamosLibro(Libro libro) {

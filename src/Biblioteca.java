@@ -58,7 +58,7 @@ public class Biblioteca {
         gestor.nuevoUsuario(new Usuario("DarthVader", "IamYourFather", TipoUsuario.USUARIO));
 
         // Crear préstamos
-        gestorPrestamos.nuevoPrestamo(new Prestamo(sistema.buscarLibro("Orgullo y prejuicio"), gestor.buscarUsuario("YodaMaster"), crearFecha(2024, 2, 3), crearFecha(2024, 2, 4)));
+        gestorPrestamos.nuevoPrestamo(new Prestamo(sistema.buscarLibro("Orgullo y Prejuicio"), gestor.buscarUsuario("YodaMaster"), crearFecha(2024, 2, 3), crearFecha(2024, 2, 4)));
         gestorPrestamos.nuevoPrestamo(new Prestamo(sistema.buscarLibro("Harry Potter y la Piedra Filosofal"), gestor.buscarUsuario("LunaLovegood"), crearFecha(2024, 2, 1)));
         gestorPrestamos.nuevoPrestamo(new Prestamo(sistema.buscarLibro("El Quijote"), gestor.buscarUsuario("HarryEl+Prota"), crearFecha(2024, 2, 2)));
         gestorPrestamos.nuevoPrestamo(new Prestamo(sistema.buscarLibro("Orgullo y Prejuicio"), gestor.buscarUsuario("CarrieBradshaw"), crearFecha(2024, 2, 3)));
