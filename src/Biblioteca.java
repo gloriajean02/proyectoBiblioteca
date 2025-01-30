@@ -179,13 +179,13 @@ public class Biblioteca {
                                     System.out.println(gestorPrestamos.toString());
                                 break;
                                 case 10:
-                                    gestorPrestamos.contarPrestamosTotalesYActivos();
+                                    prestamosTotalesyActivos();
                                 break;
                                 case 11:
-                                    System.out.println("NO SOY CAPAZ DE HACERLO");
+                                    mostrarLibroMasPrestado();
                                 break;
                                 case 12:
-                                    gestorPrestamos.usuarioConMasPrestamosActivos();
+                                    mostrarUsuarioMasPrestamos();
                                 break;
                                 case 0:
                                     System.out.println("Saliendo...");
@@ -232,7 +232,7 @@ public class Biblioteca {
                                 break;
                                 case 2:
                                     System.out.println("Lista de libros en la biblioteca:");
-                                    System.out.println(sistema);
+                                    System.out.println(sistema.toString());
                                 break;
                                 case 3:
                                     prestarLibro();
@@ -346,7 +346,7 @@ public class Biblioteca {
         }
 
         public static void prestarLibro(){
-            System.out.print("Ingrese el título del libro a prestar: ");
+            System.out.print("Ingrese el título del libro que quiere coger prestado: ");
             String tituloPrestamo = sc.nextLine();
             Libro libroPrestamo = sistema.buscarLibro(tituloPrestamo);
             if (libroPrestamo != null) {
@@ -354,41 +354,80 @@ public class Biblioteca {
                 String usuarioPrestamo = sc.nextLine();
                 Usuario usuario = gestor.buscarUsuario(usuarioPrestamo);
                 if (usuario != null) {
-                    gestorPrestamos.realizarPrestamo(libroPrestamo, usuario);
+                    Prestamo nuevoPrestamo = new Prestamo(libroPrestamo, usuario, new Date());
+                    gestorPrestamos.nuevoPrestamo(nuevoPrestamo);
+                    System.out.println("El libro '" + libroPrestamo.getTitulo() + "' ha sido prestado a " + usuario.getUser());
+                } else {
+                    System.out.println("Usuario no encontrado.");
+                }
+            } else {
+                System.out.println("Error al realizar el préstamo: Libro no disponible.");
+            }
+
+        }
+
+        public static void devolverLibro() {
+            System.out.print("Ingrese el título del libro a devolver: ");
+            String tituloDevolucion = sc.nextLine();
+            Libro libroDevolucion = sistema.buscarLibro(tituloDevolucion);
+        
+            if (libroDevolucion != null) {
+                System.out.print("Ingrese el nombre de usuario que devuelve el libro: ");
+                String usuarioDevolucion = sc.nextLine();
+                Usuario usuario = gestor.buscarUsuario(usuarioDevolucion);
+        
+                if (usuario != null) {
+                    if (gestorPrestamos.devolverLibro(libroDevolucion, usuario)) {
+                        System.out.println("El libro '" + libroDevolucion.getTitulo() + "' ha sido devuelto.");
+                    } else {
+                        System.out.println("No hay un préstamo activo de este libro para este usuario.");
+                    }
                 } else {
                     System.out.println("Usuario no encontrado.");
                 }
             } else {
                 System.out.println("Libro no encontrado.");
             }
-
-        }
-
-        public static void devolverLibro(){
-            System.out.print("Ingrese el título del libro a devolver: ");
-                String tituloDevolucion = sc.nextLine();
-                Libro libroDevolucion = sistema.buscarLibro(tituloDevolucion);
-                if (libroDevolucion != null) {
-                    System.out.print("Ingrese el nombre de usuario que devuelve el libro: ");
-                    String usuarioDevolucion = sc.nextLine();
-                    Usuario usuario = gestor.buscarUsuario(usuarioDevolucion);
-                    if (usuario != null) {
-                        gestorPrestamos.devolverLibro(libroDevolucion, usuario);
-                    } else {
-                        System.out.println("Usuario no encontrado.");
-                    }
-                } else System.out.println("Libro no encontrado.");
         }
         
+        public static void prestamosTotalesyActivos(){
+            int totalPrestamos = gestorPrestamos.contarPrestamosTotales();
+            int prestamosActivos = gestorPrestamos.contarPrestamosActivos();
+
+            System.out.println("Préstamos totales: " + totalPrestamos);
+            System.out.println("Préstamos activos: " + prestamosActivos);
+        }
+        
+        public static void mostrarUsuarioMasPrestamos() {
+            Usuario usuario = gestorPrestamos.usuarioConMasPrestamosActivos();
+        
+            if (usuario != null) {
+                int prestamosActivos = gestorPrestamos.cantidadPrestamosActivos(usuario);
+                System.out.println("\nUsuario con más préstamos activos: " + usuario.getUser() + " (" + prestamosActivos + " préstamos activos)");
+            } else {
+                System.out.println("\nNo hay préstamos activos.");
+            }
+        }
+
+        public static void mostrarLibroMasPrestado() {
+            Libro libro = gestorPrestamos.libroMasPrestado();
+        
+            if (libro != null) {
+                int cantidadPrestamos = gestorPrestamos.cantidadPrestamosLibro(libro);
+                System.out.println("\nLibro más prestado: " + libro.getTitulo() + " (" + cantidadPrestamos + " préstamos)");
+            } else {
+                System.out.println("\nNo hay préstamos registrados.");
+            }
+        }        
 
 
         // Método para crear fechas
-    public static Date crearFecha(int anio, int mes, int dia) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(anio, mes, dia, 0, 0, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        return calendar.getTime();
-    }
+        public static Date crearFecha(int anio, int mes, int dia) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(anio, mes, dia, 0, 0, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+            return calendar.getTime();
+        }
 
     // Método para parsear fechas
     public static Date parseFecha(String fechaStr) {

@@ -27,39 +27,36 @@ public class GestorPrestamos {
         }
     }
 
-    // Realizar un préstamo de libro
-    public void realizarPrestamo(Libro libro, Usuario usuario) {
-        if (libro != null && usuario != null && contador < TAM) {
-            Prestamo nuevoPrestamo = new Prestamo(libro, usuario, new Date()); 
-            prestamos[contador] = nuevoPrestamo;  
-            contador++;  
-            System.out.println("El libro '" + libro.getTitulo() + "' ha sido prestado a " + usuario.getUser());
-        } else {
-            System.out.println("Error al realizar el préstamo: Libro o usuario no válido o capacidad máxima alcanzada.");
-        }
-    }
-
     // Devolver un libro prestado
-    public void devolverLibro(Libro libro, Usuario usuario) {
+    public boolean devolverLibro(Libro libro, Usuario usuario) {
         for (int i = 0; i < contador; i++) {  
-            if (prestamos[i].getLibro().equals(libro) && prestamos[i].getUsuario().equals(usuario) && prestamos[i].getFechaDevolucion() == null) {
-                prestamos[i].devolverLibro(new Date());
-                System.out.println("El libro '" + libro.getTitulo() + "' ha sido devuelto.");
-            } else System.out.println("No se encontró un préstamo activo de este libro.");
+            if (prestamos[i] != null &&  // Comprueba que el prestamo no es null
+                prestamos[i].getFechaDevolucion() == null &&  //Comprueba que no está devuelto
+                prestamos[i].getLibro().equals(libro) &&  // Comprueba que el prestamo es un libro existente
+                prestamos[i].getUsuario().equals(usuario)) { // Comprueba que es el usuario corresp
+                    
+                prestamos[i].devolverLibro(new Date());  // le pone fecha devolucion
+                return true; 
+            }
         }
-        
+        return false;  
+    }
+    
+
+    // Contar préstamos totales
+    public int contarPrestamosTotales() {
+        return contador;
     }
 
-    // Contar préstamos totales y activos
-    public void contarPrestamosTotalesYActivos() {
+    // Contar préstamos activos
+    public int contarPrestamosActivos() {
         int prestamosActivos = 0;
         for (int i = 0; i < contador; i++) {
             if (prestamos[i].getFechaDevolucion() == null) {
                 prestamosActivos++;
             }
         }
-        System.out.println("Préstamos totales: " + contador);
-        System.out.println("Préstamos activos: " + prestamosActivos);
+        return prestamosActivos;
     }
 
     // Listar libros más prestados
@@ -67,7 +64,7 @@ public class GestorPrestamos {
     
     
     // Usuario con más préstamos activos
-    public void usuarioConMasPrestamosActivos() {
+    public Usuario usuarioConMasPrestamosActivos() {
         Usuario[] usuariosContados = new Usuario[TAM];
         int[] contadorPrestamos = new int[TAM];
         int usuariosRegistrados = 0;
@@ -105,11 +102,70 @@ public class GestorPrestamos {
             }
         }
 
-        if (usuarioCulto != null) {
-            System.out.println("\nUsuario con más préstamos activos: " + usuarioCulto.getUser() + " (" + numPrestamos + " préstamos activos)");
-        } else {
-            System.out.println("\nNo hay préstamos activos.");
+        return usuarioCulto;
+    }
+    
+    // Contador de préstamos del Usuario Culto
+    public int cantidadPrestamosActivos(Usuario usuario) {
+        int prestamosActivos = 0;
+        for (int i = 0; i < contador; i++) {
+            if (prestamos[i].getUsuario().equals(usuario) && prestamos[i].getFechaDevolucion() == null) {
+                prestamosActivos++;
+            }
         }
+        return prestamosActivos;
+    }
+
+    //Encontrar el libro más prestado
+    public Libro libroMasPrestado() {
+        Libro[] librosContados = new Libro[TAM];
+        int[] contadorPrestamos = new int[TAM];
+        int librosRegistrados = 0;
+        Libro libroPopular = null;
+        int maxPrestamos = 0;
+        boolean encontrado = false;
+    
+        for (int i = 0; i < contador && !encontrado; i++) {  
+            Libro libro = prestamos[i].getLibro();
+            encontrado = false;
+    
+            // Buscar si el libro ya está en la lista
+            for (int j = 0; j < librosRegistrados; j++) {
+                if (librosContados[j] != null && librosContados[j].equals(libro)) {
+                    contadorPrestamos[j]++;
+                    encontrado = true;
+                }
+            }
+    
+            // Si no está en la lista, lo agregamos
+            if (!encontrado) {
+                librosContados[librosRegistrados] = libro;
+                contadorPrestamos[librosRegistrados] = 1;
+                librosRegistrados++;
+            }
+        }
+    
+        // Encontrar el libro más prestado
+        for (int i = 0; i < librosRegistrados; i++) {
+            if (contadorPrestamos[i] > maxPrestamos) {
+                maxPrestamos = contadorPrestamos[i];
+                libroPopular = librosContados[i];
+            }
+        }
+    
+        return libroPopular;  // Devuelve el libro más prestado 
+    }
+
+
+    //Contar las veces que se ha prestado el libro
+    public int cantidadPrestamosLibro(Libro libro) {
+        int prestamosLibro = 0;
+        for (int i = 0; i < contador; i++) {
+            if (prestamos[i].getLibro().equals(libro)) {
+                prestamosLibro++;
+            }
+        }
+        return prestamosLibro;
     }
     
 

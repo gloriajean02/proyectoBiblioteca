@@ -26,9 +26,7 @@ class GestorLibros {
         if (lleno < TAM) {
             libros[lleno] = libro;
             lleno++;
-        } else {
-            System.out.println("El gestor está lleno, no se puede agregar más libros.");
-        }
+        } 
     }
 
     /**
