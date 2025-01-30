@@ -3,13 +3,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.Calendar;
+
+
 /**
- * Clase principal para realizar pruebas.
+ * Clase principal de biblioteca.
  * 
  * @author Gloria y Guadalupe
  */
 
-public class UsuarioMain {
+public class Biblioteca {
     public static Scanner sc = new Scanner(System.in);
     public static GestorUsuario gestor = new GestorUsuario(); //Crear un objeto tipo GestorUsuario
     public static GestorLibros sistema = new GestorLibros(); //Crear un objeto tipo GestorLibros
@@ -55,13 +57,28 @@ public class UsuarioMain {
         gestor.nuevoUsuario(new Usuario("YodaMaster", "forcebewithyou", TipoUsuario.ADMINISTRADOR));
         gestor.nuevoUsuario(new Usuario("DarthVader", "IamYourFather", TipoUsuario.USUARIO));
 
-        //Crear préstamos
+        // Crear préstamos
+        gestorPrestamos.nuevoPrestamo(new Prestamo(sistema.buscarLibro("Orgullo y prejuicio"), gestor.buscarUsuario("YodaMaster"), crearFecha(2024, 2, 3), crearFecha(2024, 2, 4)));
+        gestorPrestamos.nuevoPrestamo(new Prestamo(sistema.buscarLibro("Harry Potter y la Piedra Filosofal"), gestor.buscarUsuario("LunaLovegood"), crearFecha(2024, 2, 1)));
+        gestorPrestamos.nuevoPrestamo(new Prestamo(sistema.buscarLibro("El Quijote"), gestor.buscarUsuario("HarryEl+Prota"), crearFecha(2024, 2, 2)));
+        gestorPrestamos.nuevoPrestamo(new Prestamo(sistema.buscarLibro("Orgullo y Prejuicio"), gestor.buscarUsuario("CarrieBradshaw"), crearFecha(2024, 2, 3)));
+        gestorPrestamos.nuevoPrestamo(new Prestamo(sistema.buscarLibro("Los Miserables"), gestor.buscarUsuario("RachelGreen01"), crearFecha(2024, 2, 4)));
+        gestorPrestamos.nuevoPrestamo(new Prestamo(sistema.buscarLibro("Sherlock Holmes: Estudio en Escarlata"), gestor.buscarUsuario("MonGeller24"), crearFecha(2024, 2, 5)));
+        gestorPrestamos.nuevoPrestamo(new Prestamo(sistema.buscarLibro("Crepúsculo"), gestor.buscarUsuario("PrincesaConsuela"), crearFecha(2024, 2, 6)));
+        gestorPrestamos.nuevoPrestamo(new Prestamo(sistema.buscarLibro("Drácula"), gestor.buscarUsuario("Pablo_Profe%"), crearFecha(2024, 2, 7)));
+        gestorPrestamos.nuevoPrestamo(new Prestamo(sistema.buscarLibro("Dune"), gestor.buscarUsuario("ChandlerBing"), crearFecha(2024, 2, 8), crearFecha(2024, 2, 4)));
+        gestorPrestamos.nuevoPrestamo(new Prestamo(sistema.buscarLibro("Cien Años de Soledad"), gestor.buscarUsuario("RossGeller"), crearFecha(2024, 2, 9)));
+        gestorPrestamos.nuevoPrestamo(new Prestamo(sistema.buscarLibro("La Casa de los Espíritus"), gestor.buscarUsuario("JoeyTribbiani"), crearFecha(2024, 2, 10), crearFecha(2024, 2, 4)));
+        gestorPrestamos.nuevoPrestamo(new Prestamo(sistema.buscarLibro("La Isla del Tesoro"), gestor.buscarUsuario("BruceWayne"), crearFecha(2024, 2, 11)));
+        gestorPrestamos.nuevoPrestamo(new Prestamo(sistema.buscarLibro("El Código Da Vinci"), gestor.buscarUsuario("YodaMaster"), crearFecha(2024, 2, 3)));
+        gestorPrestamos.nuevoPrestamo(new Prestamo(sistema.buscarLibro("Amanecer"), gestor.buscarUsuario("YodaMaster"), crearFecha(2024, 2, 3)));
+        gestorPrestamos.nuevoPrestamo(new Prestamo(sistema.buscarLibro("Don Juan Tenorio"), gestor.buscarUsuario("YodaMaster"), crearFecha(2024, 2, 3), crearFecha(2024, 2, 4)));
         
 
 
         // Login
         boolean loginExitoso = false;
-        
+
         do {
             System.out.print("Ingrese su usuario: ");
             String username = sc.nextLine();
@@ -142,14 +159,14 @@ public class UsuarioMain {
                                 break;
                                 case 4:
                                     System.out.println("Lista de libros en la biblioteca:");
-                                    System.out.println(sistema);
+                                    System.out.println(sistema.toString());
                                 break;
                                 case 5:
                                     crearUsuario();
                                 break;
                                 case 6:
                                     System.out.println("Información de usuarios registrados en la biblioteca:");
-                                    System.out.println(gestor); 
+                                    System.out.println(gestor.toString()); 
                                 break;
                                 case 7:
                                     prestarLibro();
@@ -159,16 +176,16 @@ public class UsuarioMain {
                                 break;
                                 case 9:
                                     System.out.println("Lista de libros prestados:");
-                                    System.out.println(gestorPrestamos);
+                                    System.out.println(gestorPrestamos.toString());
                                 break;
                                 case 10:
-                                    System.out.println("Opción no desarrollada aún");
+                                    gestorPrestamos.contarPrestamosTotalesYActivos();
                                 break;
                                 case 11:
-                                    System.out.println("Opción no desarrollada aún");
+                                    System.out.println("NO SOY CAPAZ DE HACERLO");
                                 break;
                                 case 12:
-                                    System.out.println("Opción no desarrollada aún");
+                                    gestorPrestamos.usuarioConMasPrestamosActivos();
                                 break;
                                 case 0:
                                     System.out.println("Saliendo...");

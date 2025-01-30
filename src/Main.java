@@ -4,6 +4,12 @@ import java.util.Date;
 import java.util.Scanner;
 import java.util.Calendar;
 
+/**
+ * Clase de emergencia para realizar pruebas.
+ * 
+ * @author Gloria y Guadalupe
+ */
+
 public class Main {
     public static Scanner sc = new Scanner(System.in);
 
@@ -250,7 +256,7 @@ public class Main {
                 case 10:
                     // Mostrar libros prestados (solo para administradores)
                     if (usuarioActual.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
-                        gestorPrestamos.mostrarLibrosPrestados(usuarioActual);
+                        gestorPrestamos.toString();
                     } else {
                         System.out.println("Acción solo disponible para administradores.");
                     }

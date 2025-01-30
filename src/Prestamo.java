@@ -1,5 +1,11 @@
 import java.util.Date;
 
+/**
+ * Representa un préstamo con su titulo de libro prestado y con el usuario titular del prestamo.
+ * 
+ * @author Gloria y Guadalupe
+ */
+
 public class Prestamo {
 
     private Libro libro;
@@ -7,13 +13,20 @@ public class Prestamo {
     private Date fechaPrestamo;
     private Date fechaDevolucion;
 
-    public Prestamo (Libro libro, Usuario usuario, Date fechaPrestamo) {
-
+    // Constructor con fechaDevolución en null por defecto
+    public Prestamo(Libro libro, Usuario usuario, Date fechaPrestamo) {
         this.libro = libro;
         this.usuario = usuario;
         this.fechaPrestamo = fechaPrestamo;
-        this.fechaDevolucion = null;  
+        this.fechaDevolucion = null;  // Se inicia como null
+    }
 
+    // Constructor con fecha de devolución opcional
+    public Prestamo(Libro libro, Usuario usuario, Date fechaPrestamo, Date fechaDevolucion) {
+        this.libro = libro;
+        this.usuario = usuario;
+        this.fechaPrestamo = fechaPrestamo;
+        this.fechaDevolucion = fechaDevolucion;
     }
 
     public Libro getLibro () {return libro;}

@@ -1,5 +1,11 @@
 import java.util.Arrays;
 
+/**
+ * Clase que gestiona los libros de una biblioteca.
+ * 
+ * @author Gloria y Guadalupe
+ */
+
 class GestorLibros {
 
     private Libro[] libros;

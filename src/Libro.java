@@ -1,5 +1,11 @@
 import java.util.Date;
 
+/**
+ * Representa un libro con su titulo, su autor, su categoria y su fecha de publicación.
+ * 
+ * @author Gloria y Guadalupe
+ */
+
 public class Libro {
 
     private String titulo;
